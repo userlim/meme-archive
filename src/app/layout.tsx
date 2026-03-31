@@ -5,19 +5,38 @@ import Link from 'next/link'
 
 const SITE_URL = 'https://meme-archive.vercel.app'
 const SITE_NAME = 'Meme Archive'
-const DESCRIPTION = 'Browse and watch the hottest viral meme videos from YouTube. Discover trending memes sorted by views, organized by categories. Free meme video aggregator.'
+const DESCRIPTION = 'Browse and watch the hottest viral meme videos from YouTube. Trending memes sorted by views, engagement, and recency. Brainrot, TikTok memes, Korean memes and more. Free meme video aggregator with swipe player.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: `${SITE_NAME} - Viral Meme Videos`, template: `%s | ${SITE_NAME}` },
+  title: { default: `${SITE_NAME} - Trending Viral Meme Videos`, template: `%s | ${SITE_NAME}` },
   description: DESCRIPTION,
-  keywords: ['meme', 'viral videos', 'youtube memes', 'trending memes', 'meme compilation', 'funny videos', 'brainrot', 'tung tung', 'skibidi', 'internet memes', '밈', '밈 모음', '유행 밈'],
+  keywords: [
+    'meme', 'viral videos', 'youtube memes', 'trending memes', 'meme compilation',
+    'funny videos', 'brainrot', 'tung tung tung sahur', 'skibidi toilet', 'bombardiro crocodilo',
+    'tralalero tralala', 'internet memes', 'tiktok memes', 'meme songs',
+    '밈', '밈 모음', '유행 밈', '트렌딩 밈', '밈 아카이브', '브레인롯',
+    '간바레', '카니 챌린지', '골반통신',
+    'meme archive', 'meme aggregator', 'watch memes', 'best memes 2026',
+  ],
   openGraph: {
-    type: 'website', url: SITE_URL, title: SITE_NAME, description: DESCRIPTION, siteName: SITE_NAME,
+    type: 'website',
+    url: SITE_URL,
+    title: `${SITE_NAME} - Trending Viral Meme Videos`,
+    description: DESCRIPTION,
+    siteName: SITE_NAME,
+    locale: 'en_US',
+    alternateLocale: ['ko_KR', 'ja_JP', 'zh_CN', 'es_ES', 'fr_FR', 'de_DE', 'pt_BR'],
   },
-  twitter: { card: 'summary_large_image', title: SITE_NAME, description: DESCRIPTION },
-  robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} - Trending Viral Meme Videos`,
+    description: DESCRIPTION,
+  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
   verification: { google: 'hsjncRi9cl3tz3Otd6SJKurSt_V1bZ0AKO-bdWIGeHM' },
+  alternates: { canonical: SITE_URL },
+  category: 'entertainment',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -25,7 +44,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-4361110443201092" />
+        {/* Google Analytics */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-P08T3SZDQH" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
@@ -33,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-P08T3SZDQH');
         `}</Script>
+        {/* AdSense Auto Ads */}
         <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4361110443201092" crossOrigin="anonymous" strategy="afterInteractive" />
       </head>
       <body className="min-h-screen flex flex-col">
@@ -45,6 +67,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav className="flex items-center gap-4 text-sm text-gray-400">
               <Link href="/" className="hover:text-white transition">Home</Link>
+              <Link href="/history-page" className="hover:text-white transition flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                History
+              </Link>
             </nav>
           </div>
         </header>

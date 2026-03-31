@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { MEME_CATEGORIES } from '@/data/memes'
 import { detectLocale, t, formatViewCount, Locale } from '../i18n'
+import { addToHistory } from '../history'
 
 interface Video {
   id: string
@@ -18,7 +19,7 @@ function SwipePlayer() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const slug = searchParams.get('slug') || ''
-  const sort = searchParams.get('sort') || 'viewCount'
+  const sort = searchParams.get('sort') || 'trending'
   const meme = MEME_CATEGORIES.find(m => m.slug === slug)
 
   const [locale, setLocale] = useState<Locale>('en')
@@ -46,13 +47,29 @@ function SwipePlayer() {
     fetchVideos()
   }, [meme, sort])
 
+  // Save history when video changes
+  useEffect(() => {
+    if (videos.length === 0 || !meme) return
+    const video = videos[currentIndex]
+    if (video) {
+      addToHistory({
+        videoId: video.id,
+        title: video.title,
+        channelTitle: video.channelTitle,
+        thumbnail: video.thumbnail,
+        viewCount: video.viewCount,
+        memeSlug: meme.slug,
+        memeName: locale === 'ko' ? meme.nameKo : meme.name,
+      })
+    }
+  }, [currentIndex, videos, meme, locale])
+
   const goTo = useCallback((index: number) => {
     if (index >= 0 && index < videos.length) {
       setCurrentIndex(index)
     }
   }, [videos.length])
 
-  // Touch swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY
   }
@@ -62,12 +79,11 @@ function SwipePlayer() {
   const handleTouchEnd = () => {
     const diff = touchStartY.current - touchEndY.current
     if (Math.abs(diff) > 60) {
-      if (diff > 0) goTo(currentIndex + 1) // swipe up = next
-      else goTo(currentIndex - 1) // swipe down = prev
+      if (diff > 0) goTo(currentIndex + 1)
+      else goTo(currentIndex - 1)
     }
   }
 
-  // Keyboard
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown' || e.key === 'j') goTo(currentIndex + 1)
@@ -78,7 +94,6 @@ function SwipePlayer() {
     return () => window.removeEventListener('keydown', handler)
   }, [currentIndex, goTo, router])
 
-  // Mouse wheel
   const wheelTimeout = useRef<NodeJS.Timeout>()
   const handleWheel = (e: React.WheelEvent) => {
     if (wheelTimeout.current) return
@@ -161,7 +176,7 @@ function SwipePlayer() {
         </p>
       </div>
 
-      {/* Side nav buttons */}
+      {/* Side nav */}
       <div className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
         <button onClick={() => goTo(currentIndex - 1)} disabled={currentIndex === 0}
           className="w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-white disabled:opacity-30 transition hover:bg-white/20">

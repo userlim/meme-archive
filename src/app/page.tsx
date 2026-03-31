@@ -11,8 +11,11 @@ export default function HomePage() {
 
   useEffect(() => { setLocale(detectLocale()) }, [])
 
+  const trending = useMemo(() => MEME_CATEGORIES.filter(m => m.trending), [])
+  const all = useMemo(() => MEME_CATEGORIES, [])
+
   const filtered = useMemo(() => {
-    if (!searchQuery.trim()) return MEME_CATEGORIES
+    if (!searchQuery.trim()) return null // show sections
     const q = searchQuery.toLowerCase()
     return MEME_CATEGORIES.filter(m =>
       m.name.toLowerCase().includes(q) ||
@@ -26,18 +29,40 @@ export default function HomePage() {
     '@type': 'WebApplication',
     name: 'Meme Archive',
     url: 'https://meme-archive.vercel.app',
-    description: 'Browse and watch the hottest viral meme videos from YouTube.',
+    description: 'Browse and watch trending viral meme videos from YouTube, sorted by engagement and recency.',
     applicationCategory: 'EntertainmentApplication',
     operatingSystem: 'Any',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   }
+
+  const MemeCard = ({ meme }: { meme: typeof MEME_CATEGORIES[0] }) => (
+    <Link href={`/meme/${meme.slug}`}
+      className="group relative rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5 video-card">
+      <div className={`aspect-video bg-gradient-to-br ${meme.color} flex items-center justify-center relative`}>
+        <span className="text-5xl sm:text-6xl group-hover:scale-110 transition-transform duration-300">{meme.emoji}</span>
+        {meme.trending && (
+          <span className="absolute top-2 right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+            HOT
+          </span>
+        )}
+      </div>
+      <div className="p-3">
+        <h3 className="font-bold text-white text-sm sm:text-base truncate">
+          {locale === 'ko' ? meme.nameKo : meme.name}
+        </h3>
+        <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+          {locale === 'ko' ? meme.descriptionKo : meme.description}
+        </p>
+      </div>
+    </Link>
+  )
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-16 sm:py-24">
+      <section className="relative overflow-hidden py-14 sm:py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-red-600/10 via-transparent to-transparent" />
         <div className="relative max-w-5xl mx-auto px-4 text-center">
           <div className="flex justify-center mb-6">
@@ -69,35 +94,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Meme Grid */}
-      <section className="max-w-7xl mx-auto px-4 pb-16">
-        <h2 className="text-2xl font-bold text-white mb-6">{t(locale, 'allMemes')}</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filtered.map(meme => (
-            <Link key={meme.slug} href={`/meme/${meme.slug}`}
-              className="group relative rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5 video-card">
-              <div className={`aspect-video bg-gradient-to-br ${meme.color} flex items-center justify-center`}>
-                <span className="text-5xl sm:text-6xl group-hover:scale-110 transition-transform duration-300">{meme.emoji}</span>
-              </div>
-              <div className="p-3">
-                <h3 className="font-bold text-white text-sm sm:text-base truncate">
-                  {locale === 'ko' ? meme.nameKo : meme.name}
-                </h3>
-                <p className="text-xs text-gray-400 mt-1 line-clamp-2">
-                  {locale === 'ko' ? meme.descriptionKo : meme.description}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <div className="text-center py-20 text-gray-500">
-            <p className="text-4xl mb-4">🤷</p>
-            <p>{t(locale, 'noVideos')}</p>
+      {/* Search results */}
+      {filtered !== null ? (
+        <section className="max-w-7xl mx-auto px-4 pb-16">
+          <h2 className="text-2xl font-bold text-white mb-6">
+            {locale === 'ko' ? '검색 결과' : 'Search Results'} ({filtered.length})
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {filtered.map(meme => <MemeCard key={meme.slug} meme={meme} />)}
           </div>
-        )}
-      </section>
+          {filtered.length === 0 && (
+            <div className="text-center py-20 text-gray-500">
+              <p className="text-4xl mb-4">🤷</p>
+              <p>{t(locale, 'noVideos')}</p>
+            </div>
+          )}
+        </section>
+      ) : (
+        <>
+          {/* Trending Section */}
+          <section className="max-w-7xl mx-auto px-4 pb-10">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              🔥 {t(locale, 'trending')}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {trending.map(meme => <MemeCard key={meme.slug} meme={meme} />)}
+            </div>
+          </section>
+
+          {/* All Memes */}
+          <section className="max-w-7xl mx-auto px-4 pb-16">
+            <h2 className="text-2xl font-bold text-white mb-6">{t(locale, 'allMemes')}</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {all.map(meme => <MemeCard key={meme.slug} meme={meme} />)}
+            </div>
+          </section>
+        </>
+      )}
     </>
   )
 }
