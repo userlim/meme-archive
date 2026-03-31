@@ -2,20 +2,117 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import { MEME_CATEGORIES } from '@/data/memes'
-import { detectLocale, t, LOCALE_NAMES, Locale } from './i18n'
+import { MEME_CATEGORIES, MemeCategory } from '@/data/memes'
+import { detectLocale, t, formatViewCount, LOCALE_NAMES, Locale } from './i18n'
+import { addToHistory, isWatched } from './history'
+
+interface TrendingVideo {
+  id: string
+  title: string
+  channelTitle: string
+  publishedAt: string
+  thumbnail: string
+  viewCount: number
+  likeCount: number
+  commentCount: number
+  duration: string
+  score: number
+  ageHours: number
+}
+
+function parseDuration(iso: string): string {
+  const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/)
+  if (!match) return ''
+  const h = match[1] ? `${match[1]}:` : ''
+  const m = match[2] || '0'
+  const s = (match[3] || '0').padStart(2, '0')
+  return h ? `${h}${m.padStart(2, '0')}:${s}` : `${m}:${s}`
+}
+
+function timeAgo(dateStr: string, locale: Locale): string {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const hours = Math.floor(diff / 3600000)
+  if (hours < 1) return locale === 'ko' ? '방금' : 'Just now'
+  if (hours < 24) return locale === 'ko' ? `${hours}시간 전` : `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  if (days < 7) return locale === 'ko' ? `${days}일 전` : `${days}d ago`
+  return locale === 'ko' ? `${Math.floor(days / 7)}주 전` : `${Math.floor(days / 7)}w ago`
+}
+
+function TrendingSkeleton() {
+  return (
+    <div className="rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5">
+      <div className="aspect-video skeleton" />
+      <div className="p-3 space-y-2">
+        <div className="skeleton h-4 w-3/4" />
+        <div className="skeleton h-3 w-1/2" />
+      </div>
+    </div>
+  )
+}
+
+const SECTION_LABELS: Record<string, { en: string; ko: string; emoji: string }> = {
+  trending: { en: 'Trending / Real-Time', ko: '실시간 트렌딩', emoji: '🔥' },
+  songs: { en: 'Meme Songs & Sounds', ko: '밈 노래 & 사운드', emoji: '🎵' },
+  genre: { en: 'By Genre', ko: '장르별', emoji: '🎭' },
+  culture: { en: 'By Region', ko: '지역별', emoji: '🌏' },
+  format: { en: 'By Format', ko: '형식별', emoji: '📐' },
+}
+
+function MemeCard({ meme, locale }: { meme: MemeCategory; locale: Locale }) {
+  return (
+    <Link href={`/meme/${meme.slug}`}
+      className="group rounded-xl overflow-hidden bg-[#1a1a1a] border border-white/5 video-card">
+      <div className={`aspect-[3/2] bg-gradient-to-br ${meme.color} flex items-center justify-center relative`}>
+        <span className="text-4xl sm:text-5xl group-hover:scale-110 transition-transform duration-300">{meme.emoji}</span>
+      </div>
+      <div className="p-2.5">
+        <h3 className="font-bold text-white text-xs sm:text-sm truncate">
+          {locale === 'ko' ? meme.nameKo : meme.name}
+        </h3>
+        <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-1">
+          {locale === 'ko' ? meme.descriptionKo : meme.description}
+        </p>
+      </div>
+    </Link>
+  )
+}
 
 export default function HomePage() {
   const [locale, setLocale] = useState<Locale>('en')
   const [searchQuery, setSearchQuery] = useState('')
+  const [trendingVideos, setTrendingVideos] = useState<TrendingVideo[]>([])
+  const [loadingTrending, setLoadingTrending] = useState(true)
+  const [playingId, setPlayingId] = useState<string | null>(null)
 
   useEffect(() => { setLocale(detectLocale()) }, [])
 
-  const trending = useMemo(() => MEME_CATEGORIES.filter(m => m.trending), [])
-  const all = useMemo(() => MEME_CATEGORIES, [])
+  useEffect(() => {
+    const fetchTrending = async () => {
+      setLoadingTrending(true)
+      try {
+        const res = await fetch('/api/trending')
+        const data = await res.json()
+        setTrendingVideos(data.memes || [])
+      } catch { setTrendingVideos([]) }
+      setLoadingTrending(false)
+    }
+    fetchTrending()
+  }, [])
 
-  const filtered = useMemo(() => {
-    if (!searchQuery.trim()) return null // show sections
+  // Group categories by section
+  const sections = useMemo(() => {
+    const map = new Map<string, MemeCategory[]>()
+    for (const meme of MEME_CATEGORIES) {
+      if (!map.has(meme.section)) map.set(meme.section, [])
+      map.get(meme.section)!.push(meme)
+    }
+    return map
+  }, [])
+
+  // Search filter
+  const filteredCategories = useMemo(() => {
+    if (!searchQuery.trim()) return null
     const q = searchQuery.toLowerCase()
     return MEME_CATEGORIES.filter(m =>
       m.name.toLowerCase().includes(q) ||
@@ -24,48 +121,32 @@ export default function HomePage() {
     )
   }, [searchQuery])
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Meme Archive',
-    url: 'https://meme-archive.vercel.app',
-    description: 'Browse and watch trending viral meme videos from YouTube, sorted by engagement and recency.',
-    applicationCategory: 'EntertainmentApplication',
-    operatingSystem: 'Any',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  const handlePlayTrending = (video: TrendingVideo) => {
+    setPlayingId(video.id)
+    addToHistory({
+      videoId: video.id, title: video.title, channelTitle: video.channelTitle,
+      thumbnail: video.thumbnail, viewCount: video.viewCount,
+      memeSlug: 'trending', memeName: 'Trending',
+    })
   }
 
-  const MemeCard = ({ meme }: { meme: typeof MEME_CATEGORIES[0] }) => (
-    <Link href={`/meme/${meme.slug}`}
-      className="group relative rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5 video-card">
-      <div className={`aspect-video bg-gradient-to-br ${meme.color} flex items-center justify-center relative`}>
-        <span className="text-5xl sm:text-6xl group-hover:scale-110 transition-transform duration-300">{meme.emoji}</span>
-        {meme.trending && (
-          <span className="absolute top-2 right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-            HOT
-          </span>
-        )}
-      </div>
-      <div className="p-3">
-        <h3 className="font-bold text-white text-sm sm:text-base truncate">
-          {locale === 'ko' ? meme.nameKo : meme.name}
-        </h3>
-        <p className="text-xs text-gray-400 mt-1 line-clamp-2">
-          {locale === 'ko' ? meme.descriptionKo : meme.description}
-        </p>
-      </div>
-    </Link>
-  )
+  const jsonLd = {
+    '@context': 'https://schema.org', '@type': 'WebApplication',
+    name: 'Meme Archive', url: 'https://meme-archive.vercel.app',
+    description: 'Real-time trending meme videos. 50+ categories. Updated every 15 minutes.',
+    applicationCategory: 'EntertainmentApplication', operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  }
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-14 sm:py-20">
+      <section className="relative overflow-hidden py-10 sm:py-14">
         <div className="absolute inset-0 bg-gradient-to-b from-red-600/10 via-transparent to-transparent" />
         <div className="relative max-w-5xl mx-auto px-4 text-center">
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-4">
             <select value={locale} onChange={e => setLocale(e.target.value as Locale)}
               className="text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
               {(Object.keys(LOCALE_NAMES) as Locale[]).map(l => (
@@ -73,62 +154,127 @@ export default function HomePage() {
               ))}
             </select>
           </div>
-
-          <h1 className="text-4xl sm:text-6xl font-black text-white mb-4 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black text-white mb-3 tracking-tight">
             {t(locale, 'heroTitle')}
           </h1>
-          <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-8">
-            {t(locale, 'heroDesc')}
+          <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-5">
+            {locale === 'ko'
+              ? '50+ 카테고리, 실시간 업데이트. 지금 이 순간 가장 핫한 밈만 모아봐요.'
+              : '50+ categories, real-time updates. Only the hottest memes right now.'}
           </p>
-
-          <div className="max-w-lg mx-auto">
+          <div className="max-w-md mx-auto">
             <div className="relative">
-              <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
                 placeholder={t(locale, 'search')}
-                className="w-full pl-12 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/30 transition" />
+                className="w-full pl-10 pr-4 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white text-sm placeholder-gray-500 outline-none focus:border-red-500/50 transition" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Search results */}
-      {filtered !== null ? (
-        <section className="max-w-7xl mx-auto px-4 pb-16">
-          <h2 className="text-2xl font-bold text-white mb-6">
-            {locale === 'ko' ? '검색 결과' : 'Search Results'} ({filtered.length})
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map(meme => <MemeCard key={meme.slug} meme={meme} />)}
+      {/* Player */}
+      {playingId && (
+        <section className="max-w-4xl mx-auto px-4 mb-8">
+          <div className="yt-embed-wrapper">
+            <iframe src={`https://www.youtube.com/embed/${playingId}?autoplay=1`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
           </div>
-          {filtered.length === 0 && (
-            <div className="text-center py-20 text-gray-500">
-              <p className="text-4xl mb-4">🤷</p>
+          <button onClick={() => setPlayingId(null)} className="mt-2 text-sm text-gray-400 hover:text-white transition">
+            {locale === 'ko' ? '닫기' : 'Close'}
+          </button>
+        </section>
+      )}
+
+      {/* Search results mode */}
+      {filteredCategories !== null ? (
+        <section className="max-w-7xl mx-auto px-4 pb-16">
+          <h2 className="text-xl font-bold text-white mb-4">
+            {locale === 'ko' ? '검색 결과' : 'Search Results'} ({filteredCategories.length})
+          </h2>
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+            {filteredCategories.map(meme => <MemeCard key={meme.slug} meme={meme} locale={locale} />)}
+          </div>
+          {filteredCategories.length === 0 && (
+            <div className="text-center py-16 text-gray-500">
+              <p className="text-3xl mb-2">🤷</p>
               <p>{t(locale, 'noVideos')}</p>
             </div>
           )}
         </section>
       ) : (
         <>
-          {/* Trending Section */}
-          <section className="max-w-7xl mx-auto px-4 pb-10">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              🔥 {t(locale, 'trending')}
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {trending.map(meme => <MemeCard key={meme.slug} meme={meme} />)}
+          {/* REAL-TIME TRENDING VIDEOS */}
+          <section className="max-w-7xl mx-auto px-4 pb-8">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                🔥 {locale === 'ko' ? '실시간 HOT 밈' : 'Hot Right Now'}
+              </h2>
+              <span className="text-[11px] text-gray-600">
+                {locale === 'ko' ? '15분마다 업데이트' : 'Updates every 15min'}
+              </span>
             </div>
+            {loadingTrending ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {Array.from({ length: 8 }).map((_, i) => <TrendingSkeleton key={i} />)}
+              </div>
+            ) : trendingVideos.length === 0 ? (
+              <div className="text-center py-8 text-gray-500 text-sm">
+                <p>{t(locale, 'apiKeyMissing')}</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {trendingVideos.slice(0, 12).map((video, index) => {
+                  const watched = isWatched(video.id)
+                  return (
+                    <button key={video.id} onClick={() => handlePlayTrending(video)}
+                      className="rounded-xl overflow-hidden bg-[#1a1a1a] border border-white/5 video-card text-left">
+                      <div className="relative">
+                        <img src={video.thumbnail} alt={video.title}
+                          className={`w-full aspect-video object-cover ${watched ? 'opacity-50' : ''}`} loading="lazy" />
+                        <span className={`absolute top-1.5 left-1.5 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                          index < 3 ? 'bg-red-500' : 'bg-black/60'
+                        }`}>#{index + 1}</span>
+                        {video.ageHours < 24 && (
+                          <span className="absolute top-1.5 right-1.5 bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+                        )}
+                        {video.duration && (
+                          <span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1 py-0.5 rounded">{parseDuration(video.duration)}</span>
+                        )}
+                      </div>
+                      <div className="p-2">
+                        <h3 className={`font-medium text-xs line-clamp-2 ${watched ? 'text-gray-400' : 'text-white'}`}>{video.title}</h3>
+                        <div className="flex items-center gap-1 text-gray-500 text-[10px] mt-1">
+                          <span>{formatViewCount(video.viewCount, locale)} {t(locale, 'viewCount')}</span>
+                          <span>·</span>
+                          <span>{timeAgo(video.publishedAt, locale)}</span>
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </section>
 
-          {/* All Memes */}
-          <section className="max-w-7xl mx-auto px-4 pb-16">
-            <h2 className="text-2xl font-bold text-white mb-6">{t(locale, 'allMemes')}</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {all.map(meme => <MemeCard key={meme.slug} meme={meme} />)}
-            </div>
-          </section>
+          {/* ALL CATEGORY SECTIONS */}
+          {['trending', 'songs', 'genre', 'culture', 'format'].map(sectionKey => {
+            const items = sections.get(sectionKey)
+            if (!items || items.length === 0) return null
+            const label = SECTION_LABELS[sectionKey]
+            return (
+              <section key={sectionKey} className="max-w-7xl mx-auto px-4 pb-8">
+                <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  {label.emoji} {locale === 'ko' ? label.ko : label.en}
+                </h2>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                  {items.map(meme => <MemeCard key={meme.slug} meme={meme} locale={locale} />)}
+                </div>
+              </section>
+            )
+          })}
         </>
       )}
     </>
