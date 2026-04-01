@@ -3,7 +3,7 @@ import './globals.css'
 import Script from 'next/script'
 import Link from 'next/link'
 
-const SITE_URL = 'https://meme-archive.vercel.app'
+const SITE_URL = 'https://meme-archive-self.vercel.app'
 const SITE_NAME = 'Meme Archive'
 const DESCRIPTION = 'Browse and watch the hottest viral meme videos from YouTube. Trending memes sorted by views, engagement, and recency. Brainrot, TikTok memes, Korean memes and more. Free meme video aggregator with swipe player.'
 
