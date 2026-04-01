@@ -46,6 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-4361110443201092" />
+        {/* Google AdSense - must be in head for auto ads */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4361110443201092" crossOrigin="anonymous"></script>
         {/* Google Analytics */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-P08T3SZDQH" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`
@@ -54,8 +56,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-P08T3SZDQH');
         `}</Script>
-        {/* AdSense Auto Ads */}
-        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4361110443201092" crossOrigin="anonymous" strategy="afterInteractive" />
       </head>
       <body className="min-h-screen flex flex-col">
         {/* Header */}
