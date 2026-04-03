@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
-  verification: { google: 'hsjncRi9cl3tz3Otd6SJKurSt_V1bZ0AKO-bdWIGeHM' },
+  verification: { google: ['hsjncRi9cl3tz3Otd6SJKurSt_V1bZ0AKO-bdWIGeHM', 'ETO59LUETFhBHTx7GMun0GscvJgzLq2iGWdeAmh3e10'] },
   alternates: { canonical: SITE_URL },
   category: 'entertainment',
 }
