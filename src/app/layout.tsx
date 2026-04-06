@@ -49,12 +49,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Google AdSense - must be in head for auto ads */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4361110443201092" crossOrigin="anonymous"></script>
         {/* Google Analytics */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-P08T3SZDQH" strategy="afterInteractive" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-P04TH8XJJ9" strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-P08T3SZDQH');
+          gtag('config', 'G-P04TH8XJJ9');
         `}</Script>
       </head>
       <body className="min-h-screen flex flex-col">
