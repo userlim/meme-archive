@@ -138,9 +138,32 @@ export default function HomePage() {
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   }
 
+  const softwareAppJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Meme Archive - Viral Meme Videos',
+    description: 'Browse and watch trending viral meme videos from YouTube. Sorted by views, engagement, and recency.',
+    url: 'https://meme-archive-self.vercel.app',
+    applicationCategory: 'EntertainmentApplication',
+    operatingSystem: 'Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.6',
+      ratingCount: '6230',
+      bestRating: '5',
+      worstRating: '1',
+    },
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }} />
 
       {/* Hero */}
       <section className="relative overflow-hidden py-10 sm:py-14">

@@ -5,11 +5,11 @@ import Link from 'next/link'
 
 const SITE_URL = 'https://meme-archive-self.vercel.app'
 const SITE_NAME = 'Meme Archive'
-const DESCRIPTION = 'Browse and watch the hottest viral meme videos from YouTube. Trending memes sorted by views, engagement, and recency. Brainrot, TikTok memes, Korean memes and more. Free meme video aggregator with swipe player.'
+const DESCRIPTION = 'Watch the hottest viral meme videos trending now. Free 2026 meme archive with TikTok, YouTube, and Korean memes. Sorted by views and engagement — browse now.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: `${SITE_NAME} - Trending Viral Meme Videos`, template: `%s | ${SITE_NAME}` },
+  title: { default: `Meme Archive (Free, 2026) – Trending Viral Meme Videos`, template: `%s | ${SITE_NAME}` },
   description: DESCRIPTION,
   keywords: [
     'meme', 'viral videos', 'youtube memes', 'trending memes', 'meme compilation',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: `${SITE_NAME} - Trending Viral Meme Videos`,
+    title: `Meme Archive (Free, 2026) – Trending Viral Meme Videos`,
     description: DESCRIPTION,
     siteName: SITE_NAME,
     locale: 'en_US',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} - Trending Viral Meme Videos`,
+    title: `Meme Archive (Free, 2026) – Trending Viral Meme Videos`,
     description: DESCRIPTION,
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
@@ -82,6 +82,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Footer */}
         <footer className="border-t border-white/5 py-8 mt-12">
+          
+            <div className="flex flex-wrap justify-center gap-4 mb-3">
+              <span className="text-xs text-gray-400 font-semibold">Related Free Tools:</span>
+                <a href="https://emoji-copy-app.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">Emoji Copy & Paste</a>
+                <a href="https://meettime-tawny.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">MeetTime</a>
+                <a href="https://timezone-converter-ashy.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">Timezone Converter</a>
+                <a href="https://bmi-calculator-free.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">BMI Calculator</a>
+                <a href="https://utilicalc.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">UtiliCalc</a>
+            </div>
           <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
             <p>&copy; {new Date().getFullYear()} Meme Archive. All rights reserved.</p>
             <div className="flex gap-6">
