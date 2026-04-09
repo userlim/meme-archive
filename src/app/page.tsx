@@ -306,6 +306,33 @@ export default function HomePage() {
         <h2 className="text-xl font-bold mb-3">About This Tool</h2>
         <p className="text-gray-600 dark:text-gray-400 leading-relaxed">Browse and discover the internet's best memes in one organized archive. From classic reaction images to the latest viral trends, our curated collection covers every meme category. Search by keyword, browse by category, or explore what's trending. Save and share your favorites instantly.</p>
       </section>
+      
+      {/* Extended Content Section for SEO depth */}
+      <section id="content-depth-section" className="mt-12 max-w-3xl mx-auto px-4">
+        <h2 className="text-2xl font-bold mb-6">Complete Guide</h2>
+        
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">What Makes a Meme Go Viral?</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Internet memes spread through a combination of relatability, humor, simplicity, and timing. Research from Indiana University found that meme virality follows a "rich-get-richer" pattern — memes that gain early traction on platforms like Reddit, Twitter, and TikTok are exponentially more likely to spread further. The most successful memes tap into universal emotions or current events, are easily remixable, and work across cultural contexts.` }} />
+            </div>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">The History of Internet Memes</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `The term "meme" was coined by Richard Dawkins in his 1976 book "The Selfish Gene" to describe how cultural information spreads. Internet memes evolved from early examples like the Dancing Baby (1996) and All Your Base Are Belong to Us (2001) through rage comics and advice animals (2008-2012), to today's short-form video memes on TikTok and Instagram Reels. Each era reflects the dominant platforms and cultural trends of its time.` }} />
+            </div>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">Major Meme Categories Explained</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Memes fall into several broad categories: <strong>Reaction memes</strong> express emotions in response to situations. <strong>Template memes</strong> use a recognizable format with customizable text. <strong>Wholesome memes</strong> promote positivity and kindness. <strong>Surreal memes</strong> use absurdist humor and unexpected imagery. <strong>Meta memes</strong> are self-referential, commenting on meme culture itself. <strong>Niche memes</strong> target specific communities or interests. Our archive organizes memes across all these categories for easy discovery.` }} />
+            </div>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">Memes as Cultural Commentary</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Beyond entertainment, memes serve as a form of democratic cultural commentary. They've been used to process collective trauma (pandemic memes), comment on politics, build community identity, and even influence stock markets (as with the GameStop/WallStreetBets phenomenon). Researchers at MIT found that memes spread 6x faster than traditional news stories, making them one of the most efficient vehicles for information dissemination in the digital age.` }} />
+            </div>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">Copyright and Fair Use in Meme Culture</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Most memes exist in a gray area of copyright law. While the original images may be copyrighted, meme creation typically falls under fair use as transformative, non-commercial commentary or parody. However, commercial use of memes (in advertising, merchandise) has led to legal disputes. Notable cases include Grumpy Cat's estate winning $710,000 in a copyright lawsuit. For personal sharing and social media use, memes are generally considered fair use.` }} />
+            </div>
+      </section>
+
       {/* FAQ Section for SEO */}
       <section id="faq-section" className="mt-12 max-w-3xl mx-auto px-4">
         <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
