@@ -300,6 +300,34 @@ export default function HomePage() {
           })}
         </>
       )}
+
+      {/* SEO Content Section */}
+      <section id="about-section" className="mt-8 max-w-3xl mx-auto px-4">
+        <h2 className="text-xl font-bold mb-3">About This Tool</h2>
+        <p className="text-gray-600 dark:text-gray-400 leading-relaxed">Browse and discover the internet's best memes in one organized archive. From classic reaction images to the latest viral trends, our curated collection covers every meme category. Search by keyword, browse by category, or explore what's trending. Save and share your favorites instantly.</p>
+      </section>
+      {/* FAQ Section for SEO */}
+      <section id="faq-section" className="mt-12 max-w-3xl mx-auto px-4">
+        <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+        
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">How many memes are in the archive?</h3>
+              <p className="text-gray-600 dark:text-gray-400">Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content.</p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Can I search for specific memes?</h3>
+              <p className="text-gray-600 dark:text-gray-400">Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites.</p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Are these memes free to use?</h3>
+              <p className="text-gray-600 dark:text-gray-400">The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible.</p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">How do I save or share a meme?</h3>
+              <p className="text-gray-600 dark:text-gray-400">Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms.</p>
+            </div>
+      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many memes are in the archive?", "acceptedAnswer": {"@type": "Answer", "text": "Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content."}}, {"@type": "Question", "name": "Can I search for specific memes?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites."}}, {"@type": "Question", "name": "Are these memes free to use?", "acceptedAnswer": {"@type": "Answer", "text": "The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible."}}, {"@type": "Question", "name": "How do I save or share a meme?", "acceptedAnswer": {"@type": "Answer", "text": "Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms."}}]}) }} />
     </>
   )
 }
