@@ -35,7 +35,14 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
   verification: { google: ['hsjncRi9cl3tz3Otd6SJKurSt_V1bZ0AKO-bdWIGeHM', 'ETO59LUETFhBHTx7GMun0GscvJgzLq2iGWdeAmh3e10'] },
-  alternates: { canonical: SITE_URL },
+  alternates: {
+    canonical: 'https://meme-archive-self.vercel.app',
+    languages: {
+      'en': 'https://meme-archive-self.vercel.app',
+      'x-default': 'https://meme-archive-self.vercel.app',
+    },
+  },
+  },
   category: 'entertainment',
 }
 
@@ -56,7 +63,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-P04TH8XJJ9');
         `}</Script>
-      </head>
+              {/* BreadcrumbList Schema */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://meme-archive-self.vercel.app"}, {"@type": "ListItem", "position": 2, "name": "Meme Archive", "item": "https://meme-archive-self.vercel.app"}]})
+        }} />
+        {/* Organization & WebSite Schema */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({"@context": "https://schema.org", "@type": "WebSite", "name": "Meme Archive", "url": "https://meme-archive-self.vercel.app", "publisher": {"@type": "Organization", "name": "UtiliCalc Tools", "url": "https://utilicalc.vercel.app", "logo": {"@type": "ImageObject", "url": "https://meme-archive-self.vercel.app/favicon.svg"}}, "potentialAction": {"@type": "SearchAction", "target": "https://meme-archive-self.vercel.app/?q={search_term_string}", "query-input": "required name=search_term_string"}})
+        }} />
+        {/* Preconnect & DNS-Prefetch Hints */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        {/* Speakable Schema */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({"@context": "https://schema.org", "@type": "WebPage", "speakable": {"@type": "SpeakableSpecification", "cssSelector": ["h1", ".keyword-seo-section p"]}})
+        }} />
+</head>
       <body className="min-h-screen flex flex-col">
         {/* Header */}
         <header className="sticky top-0 z-50 bg-[#0f0f0f]/90 backdrop-blur-md border-b border-white/5">
@@ -84,12 +108,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="border-t border-white/5 py-8 mt-12">
           
             <div className="flex flex-wrap justify-center gap-4 mb-3">
-              <span className="text-xs text-gray-400 font-semibold">Related Free Tools:</span>
-                <a href="https://emoji-copy-app.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">Emoji Copy & Paste Tool</a>
-                <a href="https://meettime-tawny.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">Meeting Time Zone Scheduler</a>
-                <a href="https://timezone-converter-ashy.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">World Timezone Converter</a>
-                <a href="https://bmi-calculator-free.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">Free BMI Calculator</a>
-                <a href="https://utilicalc.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xs">UtiliCalc All-in-One Tools</a>
+              <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Related Free Tools:</span>
+                <a href="https://emoji-copy-app.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">Emoji Copy & Paste Tool</a>
+                <a href="https://meettime-tawny.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">Meeting Time Zone Scheduler</a>
+                <a href="https://timezone-converter-ashy.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">World Timezone Converter</a>
+                <a href="https://bmi-calculator-free.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">Free BMI Calculator</a>
+                <a href="https://utilicalc.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">UtiliCalc All-in-One Tools</a>
             </div>
           <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
             <p>&copy; {new Date().getFullYear()} Meme Archive. All rights reserved.</p>

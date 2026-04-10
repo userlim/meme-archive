@@ -91,7 +91,7 @@ export default function HistoryPage() {
         </div>
         <div className="flex items-center gap-3">
           <select value={locale} onChange={e => setLocale(e.target.value as Locale)}
-            className="text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
+            className="text-sm bg-white/[0.03]/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
             {(Object.keys(LOCALE_NAMES) as Locale[]).map(l => (
               <option key={l} value={l} className="bg-[#1a1a1a]">{LOCALE_NAMES[l]}</option>
             ))}
@@ -113,18 +113,18 @@ export default function HistoryPage() {
           </svg>
           <input type="text" value={filter} onChange={e => setFilter(e.target.value)}
             placeholder={locale === 'ko' ? '시청 기록 검색...' : 'Search history...'}
-            className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-500 outline-none focus:border-white/20 transition" />
+            className="w-full pl-10 pr-4 py-2.5 bg-white/[0.03]/5 border border-white/10 rounded-xl text-white text-sm placeholder-gray-500 outline-none focus:border-white/20 transition" />
         </div>
       )}
 
       {/* Empty */}
       {history.length === 0 && (
         <div className="text-center py-24">
-          <svg className="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
           <p className="text-gray-500 text-lg">{locale === 'ko' ? '아직 시청 기록이 없습니다' : 'No watch history yet'}</p>
-          <p className="text-gray-600 text-sm mt-2">{locale === 'ko' ? '밈 영상을 시청하면 여기에 기록됩니다' : 'Videos you watch will appear here'}</p>
+          <p className="text-gray-400 text-sm mt-2">{locale === 'ko' ? '밈 영상을 시청하면 여기에 기록됩니다' : 'Videos you watch will appear here'}</p>
           <Link href="/" className="mt-6 inline-block px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium text-sm transition">
             {locale === 'ko' ? '밈 둘러보기' : 'Browse Memes'}
           </Link>
@@ -138,7 +138,7 @@ export default function HistoryPage() {
           <div className="space-y-2">
             {group.items.map(item => (
               <Link key={`${item.videoId}-${item.watchedAt}`} href={`/meme/${item.memeSlug}`}
-                className="flex gap-3 p-2 rounded-xl hover:bg-white/5 transition group">
+                className="flex gap-3 p-2 rounded-xl hover:bg-white/[0.03]/5 transition group">
                 <div className="relative w-36 sm:w-44 shrink-0">
                   <img src={item.thumbnail} alt={item.title}
                     className="w-full aspect-video object-cover rounded-lg" loading="lazy" />
@@ -153,8 +153,8 @@ export default function HistoryPage() {
                     <span>{formatViewCount(item.viewCount, locale)} {t(locale, 'viewCount')}</span>
                   </div>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs text-gray-600">{timeAgoShort(item.watchedAt, locale)}</span>
-                    <span className="text-xs text-gray-600">·</span>
+                    <span className="text-xs text-gray-400">{timeAgoShort(item.watchedAt, locale)}</span>
+                    <span className="text-xs text-gray-400">·</span>
                     <span className="text-xs text-red-400/70">{item.memeName}</span>
                   </div>
                 </div>

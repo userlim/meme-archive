@@ -171,7 +171,7 @@ export default function HomePage() {
         <div className="relative max-w-5xl mx-auto px-4 text-center">
           <div className="flex justify-center mb-4">
             <select value={locale} onChange={e => setLocale(e.target.value as Locale)}
-              className="text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
+              className="text-sm bg-white/[0.03]/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
               {(Object.keys(LOCALE_NAMES) as Locale[]).map(l => (
                 <option key={l} value={l} className="bg-[#1a1a1a]">{LOCALE_NAMES[l]}</option>
               ))}
@@ -192,7 +192,7 @@ export default function HomePage() {
               </svg>
               <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
                 placeholder={t(locale, 'search')}
-                className="w-full pl-10 pr-4 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white text-sm placeholder-gray-500 outline-none focus:border-red-500/50 transition" />
+                className="w-full pl-10 pr-4 py-2.5 bg-white/[0.03]/10 border border-white/20 rounded-xl text-white text-sm placeholder-gray-500 outline-none focus:border-red-500/50 transition" />
             </div>
           </div>
         </div>
@@ -235,7 +235,7 @@ export default function HomePage() {
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 🔥 {locale === 'ko' ? '실시간 HOT 밈' : 'Hot Right Now'}
               </h2>
-              <span className="text-[11px] text-gray-600">
+              <span className="text-[11px] text-gray-400">
                 {locale === 'ko' ? '15분마다 업데이트' : 'Updates every 15min'}
               </span>
             </div>
@@ -258,10 +258,10 @@ export default function HomePage() {
                         <img src={video.thumbnail} alt={video.title}
                           className={`w-full aspect-video object-cover ${watched ? 'opacity-50' : ''}`} loading="lazy" />
                         <span className={`absolute top-1.5 left-1.5 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                          index < 3 ? 'bg-red-500' : 'bg-black/60'
+                          index < 3 ? 'bg-red-500/100' : 'bg-black/60'
                         }`}>#{index + 1}</span>
                         {video.ageHours < 24 && (
-                          <span className="absolute top-1.5 right-1.5 bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+                          <span className="absolute top-1.5 right-1.5 bg-green-500/100 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
                         )}
                         {video.duration && (
                           <span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1 py-0.5 rounded">{parseDuration(video.duration)}</span>
@@ -304,7 +304,7 @@ export default function HomePage() {
       {/* SEO Content Section */}
       <section id="about-section" className="mt-8 max-w-3xl mx-auto px-4">
         <h2 className="text-xl font-bold mb-3">About This Tool</h2>
-        <p className="text-gray-600 dark:text-gray-400 leading-relaxed">Browse and discover the internet's best memes in one organized archive. From classic reaction images to the latest viral trends, our curated collection covers every meme category. Search by keyword, browse by category, or explore what's trending. Save and share your favorites instantly.</p>
+        <p className="text-gray-400 dark:text-gray-400 leading-relaxed">Browse and discover the internet's best memes in one organized archive. From classic reaction images to the latest viral trends, our curated collection covers every meme category. Search by keyword, browse by category, or explore what's trending. Save and share your favorites instantly.</p>
       </section>
       
       {/* Extended Content Section for SEO depth */}
@@ -313,23 +313,23 @@ export default function HomePage() {
         
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">What Makes a Meme Go Viral?</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Internet memes spread through a combination of relatability, humor, simplicity, and timing. Research from Indiana University found that meme virality follows a "rich-get-richer" pattern — memes that gain early traction on platforms like Reddit, Twitter, and TikTok are exponentially more likely to spread further. The most successful memes tap into universal emotions or current events, are easily remixable, and work across cultural contexts.` }} />
+              <p className="text-gray-400 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Internet memes spread through a combination of relatability, humor, simplicity, and timing. Research from Indiana University found that meme virality follows a "rich-get-richer" pattern — memes that gain early traction on platforms like Reddit, Twitter, and TikTok are exponentially more likely to spread further. The most successful memes tap into universal emotions or current events, are easily remixable, and work across cultural contexts.` }} />
             </div>
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">The History of Internet Memes</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `The term "meme" was coined by Richard Dawkins in his 1976 book "The Selfish Gene" to describe how cultural information spreads. Internet memes evolved from early examples like the Dancing Baby (1996) and All Your Base Are Belong to Us (2001) through rage comics and advice animals (2008-2012), to today's short-form video memes on TikTok and Instagram Reels. Each era reflects the dominant platforms and cultural trends of its time.` }} />
+              <p className="text-gray-400 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `The term "meme" was coined by Richard Dawkins in his 1976 book "The Selfish Gene" to describe how cultural information spreads. Internet memes evolved from early examples like the Dancing Baby (1996) and All Your Base Are Belong to Us (2001) through rage comics and advice animals (2008-2012), to today's short-form video memes on TikTok and Instagram Reels. Each era reflects the dominant platforms and cultural trends of its time.` }} />
             </div>
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">Major Meme Categories Explained</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Memes fall into several broad categories: <strong>Reaction memes</strong> express emotions in response to situations. <strong>Template memes</strong> use a recognizable format with customizable text. <strong>Wholesome memes</strong> promote positivity and kindness. <strong>Surreal memes</strong> use absurdist humor and unexpected imagery. <strong>Meta memes</strong> are self-referential, commenting on meme culture itself. <strong>Niche memes</strong> target specific communities or interests. Our archive organizes memes across all these categories for easy discovery.` }} />
+              <p className="text-gray-400 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Memes fall into several broad categories: <strong>Reaction memes</strong> express emotions in response to situations. <strong>Template memes</strong> use a recognizable format with customizable text. <strong>Wholesome memes</strong> promote positivity and kindness. <strong>Surreal memes</strong> use absurdist humor and unexpected imagery. <strong>Meta memes</strong> are self-referential, commenting on meme culture itself. <strong>Niche memes</strong> target specific communities or interests. Our archive organizes memes across all these categories for easy discovery.` }} />
             </div>
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">Memes as Cultural Commentary</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Beyond entertainment, memes serve as a form of democratic cultural commentary. They've been used to process collective trauma (pandemic memes), comment on politics, build community identity, and even influence stock markets (as with the GameStop/WallStreetBets phenomenon). Researchers at MIT found that memes spread 6x faster than traditional news stories, making them one of the most efficient vehicles for information dissemination in the digital age.` }} />
+              <p className="text-gray-400 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Beyond entertainment, memes serve as a form of democratic cultural commentary. They've been used to process collective trauma (pandemic memes), comment on politics, build community identity, and even influence stock markets (as with the GameStop/WallStreetBets phenomenon). Researchers at MIT found that memes spread 6x faster than traditional news stories, making them one of the most efficient vehicles for information dissemination in the digital age.` }} />
             </div>
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">Copyright and Fair Use in Meme Culture</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Most memes exist in a gray area of copyright law. While the original images may be copyrighted, meme creation typically falls under fair use as transformative, non-commercial commentary or parody. However, commercial use of memes (in advertising, merchandise) has led to legal disputes. Notable cases include Grumpy Cat's estate winning $710,000 in a copyright lawsuit. For personal sharing and social media use, memes are generally considered fair use.` }} />
+              <p className="text-gray-400 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Most memes exist in a gray area of copyright law. While the original images may be copyrighted, meme creation typically falls under fair use as transformative, non-commercial commentary or parody. However, commercial use of memes (in advertising, merchandise) has led to legal disputes. Notable cases include Grumpy Cat's estate winning $710,000 in a copyright lawsuit. For personal sharing and social media use, memes are generally considered fair use.` }} />
             </div>
       </section>
 
@@ -339,22 +339,35 @@ export default function HomePage() {
         
             <div className="mb-4">
               <h3 className="text-lg font-semibold mb-2">How many memes are in the archive?</h3>
-              <p className="text-gray-600 dark:text-gray-400">Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content.</p>
+              <p className="text-gray-400 dark:text-gray-400">Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content.</p>
             </div>
             <div className="mb-4">
               <h3 className="text-lg font-semibold mb-2">Can I search for specific memes?</h3>
-              <p className="text-gray-600 dark:text-gray-400">Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites.</p>
+              <p className="text-gray-400 dark:text-gray-400">Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites.</p>
             </div>
             <div className="mb-4">
               <h3 className="text-lg font-semibold mb-2">Are these memes free to use?</h3>
-              <p className="text-gray-600 dark:text-gray-400">The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible.</p>
+              <p className="text-gray-400 dark:text-gray-400">The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible.</p>
             </div>
             <div className="mb-4">
               <h3 className="text-lg font-semibold mb-2">How do I save or share a meme?</h3>
-              <p className="text-gray-600 dark:text-gray-400">Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms.</p>
+              <p className="text-gray-400 dark:text-gray-400">Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms.</p>
             </div>
       </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many memes are in the archive?", "acceptedAnswer": {"@type": "Answer", "text": "Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content."}}, {"@type": "Question", "name": "Can I search for specific memes?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites."}}, {"@type": "Question", "name": "Are these memes free to use?", "acceptedAnswer": {"@type": "Answer", "text": "The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible."}}, {"@type": "Question", "name": "How do I save or share a meme?", "acceptedAnswer": {"@type": "Answer", "text": "Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms."}}]}) }} />
-    </>
+    
+        {/* Keyword-Optimized Content */}
+        <section id="keyword-seo-section" className="mt-8 max-w-3xl mx-auto px-4">
+          <p className="text-sm text-gray-400 leading-relaxed">
+            Browse thousands of funny memes, trending memes 2026, dank memes, and viral memes. Our meme archive features the best meme collection with popular memes today, reaction memes, and new memes updated daily. Search and discover meme templates.
+          </p>
+<div className="mt-3 flex flex-wrap gap-2">
+          <a href="https://emoji-copy-app.vercel.app" className="text-xs text-blue-400 hover:underline">Emoji Copy & Paste →</a>
+          <a href="https://meettime-tawny.vercel.app" className="text-xs text-blue-400 hover:underline">MeetTime →</a>
+          <a href="https://timezone-converter-ashy.vercel.app" className="text-xs text-blue-400 hover:underline">Timezone Converter →</a>
+        </div>
+
+        </section>
+        </>
   )
 }

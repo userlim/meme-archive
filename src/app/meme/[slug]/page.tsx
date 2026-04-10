@@ -114,7 +114,7 @@ export default function MemeDetailPage() {
       {/* Language */}
       <div className="flex justify-end mb-4">
         <select value={locale} onChange={e => setLocale(e.target.value as Locale)}
-          className="text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
+          className="text-sm bg-white/[0.03]/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
           {(Object.keys(LOCALE_NAMES) as Locale[]).map(l => (
             <option key={l} value={l} className="bg-[#1a1a1a]">{LOCALE_NAMES[l]}</option>
           ))}
@@ -146,7 +146,7 @@ export default function MemeDetailPage() {
         {(['trending', 'viewCount', 'date', 'relevance'] as SortOrder[]).map(s => (
           <button key={s} onClick={() => setSort(s)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-              sort === s ? 'bg-white text-black' : 'bg-white/10 text-gray-300 hover:bg-white/20'
+              sort === s ? 'bg-white/[0.03] text-black' : 'bg-white/[0.03]/10 text-gray-300 hover:bg-white/[0.03]/20'
             }`}>
             {s === 'trending' ? (locale === 'ko' ? '🔥 트렌딩' : '🔥 Trending') :
              t(locale, s === 'viewCount' ? 'sortByViews' : s === 'date' ? 'sortByDate' : 'sortByRelevance')}
@@ -188,15 +188,15 @@ export default function MemeDetailPage() {
           <div className="text-center py-20 text-gray-500">
             <p className="text-4xl mb-4">📭</p>
             <p>{t(locale, 'noVideos')}</p>
-            <p className="text-xs mt-2 text-gray-600">{t(locale, 'apiKeyMissing')}</p>
+            <p className="text-xs mt-2 text-gray-400">{t(locale, 'apiKeyMissing')}</p>
           </div>
         ) : (
           videos.map((video, index) => {
             const watched = isWatched(video.id)
             return (
               <button key={video.id} onClick={() => handlePlay(video)}
-                className={`w-full flex gap-3 sm:gap-4 p-2 rounded-xl text-left transition hover:bg-white/5 ${
-                  playingId === video.id ? 'bg-white/10 ring-1 ring-red-500/30' : ''
+                className={`w-full flex gap-3 sm:gap-4 p-2 rounded-xl text-left transition hover:bg-white/[0.03]/5 ${
+                  playingId === video.id ? 'bg-white/[0.03]/10 ring-1 ring-red-500/30' : ''
                 }`}>
                 <div className="relative w-40 sm:w-48 shrink-0">
                   <img src={video.thumbnail} alt={video.title}
