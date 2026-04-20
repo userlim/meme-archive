@@ -6,7 +6,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold text-white mb-8">Privacy Policy</h1>
-      <div className="prose prose-invert prose-sm max-w-none text-gray-300 space-y-4">
+      <div className="prose prose-invert prose-sm max-w-none text-[var(--text-muted)] space-y-4">
         <p>Last updated: March 30, 2026</p>
         <h2 className="text-xl font-semibold text-white mt-6">Information We Collect</h2>
         <p>Meme Archive does not collect personal information directly. We use third-party services that may collect information:</p>

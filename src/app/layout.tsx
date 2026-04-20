@@ -1,40 +1,34 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import './globals.css'
 import Script from 'next/script'
-import Link from 'next/link'
-
-const SITE_URL = 'https://meme-archive-self.vercel.app'
-const SITE_NAME = 'Meme Archive'
-const DESCRIPTION = 'Watch the hottest viral meme videos trending now. Free 2026 meme archive with TikTok, YouTube, and Korean memes. Sorted by views and engagement — browse now.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: { default: `Meme Archive (Free, 2026) – Trending Viral Meme Videos`, template: `%s | ${SITE_NAME}` },
-  description: DESCRIPTION,
-  keywords: [
-    'meme', 'viral videos', 'youtube memes', 'trending memes', 'meme compilation',
-    'funny videos', 'brainrot', 'tung tung tung sahur', 'skibidi toilet', 'bombardiro crocodilo',
-    'tralalero tralala', 'internet memes', 'tiktok memes', 'meme songs',
-    '밈', '밈 모음', '유행 밈', '트렌딩 밈', '밈 아카이브', '브레인롯',
-    '간바레', '카니 챌린지', '골반통신',
-    'meme archive', 'meme aggregator', 'watch memes', 'best memes 2026',
-  ],
+  title: 'Meme Archive - Free Online Tool',
+  description: 'Free Meme Archive tool. No signup required.',
+  keywords: 'meme archive, free calculator, online tool',
+  metadataBase: new URL('https://meme-archive-self.vercel.app'),
   openGraph: {
-    type: 'website',
-    url: SITE_URL,
-    title: `Meme Archive (Free, 2026) – Trending Viral Meme Videos`,
-    description: DESCRIPTION,
-    siteName: SITE_NAME,
+    title: 'Meme Archive - Free Online Tool',
+    description: 'Free Meme Archive tool. No signup required.',
+    url: 'https://meme-archive-self.vercel.app',
+    siteName: 'Meme Archive',
     locale: 'en_US',
-    alternateLocale: ['ko_KR', 'ja_JP', 'zh_CN', 'es_ES', 'fr_FR', 'de_DE', 'pt_BR'],
+    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Meme Archive (Free, 2026) – Trending Viral Meme Videos`,
-    description: DESCRIPTION,
+    title: 'Meme Archive',
+    description: 'Free Meme Archive tool. No signup required.',
   },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
-  verification: { google: ['hsjncRi9cl3tz3Otd6SJKurSt_V1bZ0AKO-bdWIGeHM', 'ETO59LUETFhBHTx7GMun0GscvJgzLq2iGWdeAmh3e10'] },
+  robots: {
+    index: true,
+    follow: true,
+    'max-image-preview': 'large' as const,
+    'max-snippet': -1,
+    'max-video-preview': -1,
+  },
+  icons: { icon: '/favicon.svg' },
   alternates: {
     canonical: 'https://meme-archive-self.vercel.app',
     languages: {
@@ -42,9 +36,7 @@ export const metadata: Metadata = {
       'x-default': 'https://meme-archive-self.vercel.app',
     },
   },
-  },
-  category: 'entertainment',
-}
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -89,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="text-xl">🎬</span>
               <span className="font-bold text-lg text-white">Meme Archive</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm text-gray-400">
+            <nav className="flex items-center gap-4 text-sm text-[var(--text-muted)]">
               <Link href="/" className="hover:text-white transition">Home</Link>
               <Link href="/history-page" className="hover:text-white transition flex items-center gap-1">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,18 +100,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="border-t border-white/5 py-8 mt-12">
           
             <div className="flex flex-wrap justify-center gap-4 mb-3">
-              <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Related Free Tools:</span>
-                <a href="https://emoji-copy-app.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">Emoji Copy & Paste Tool</a>
-                <a href="https://meettime-tawny.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">Meeting Time Zone Scheduler</a>
-                <a href="https://timezone-converter-ashy.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">World Timezone Converter</a>
-                <a href="https://bmi-calculator-free.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">Free BMI Calculator</a>
-                <a href="https://utilicalc.vercel.app" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-xs">UtiliCalc All-in-One Tools</a>
+              <span className="text-xs text-[var(--text-secondary)] font-semibold uppercase tracking-wider">Related Free Tools:</span>
+                <a href="https://emoji-copy-app.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">Emoji Copy & Paste Tool</a>
+                <a href="https://meettime-tawny.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">Meeting Time Zone Scheduler</a>
+                <a href="https://timezone-converter-ashy.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">World Timezone Converter</a>
+                <a href="https://bmi-calculator-free.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">Free BMI Calculator</a>
+                <a href="https://utilicalc.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">UtiliCalc All-in-One Tools</a>
             </div>
-          <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+          <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--text-secondary)]">
             <p>&copy; {new Date().getFullYear()} Meme Archive. All rights reserved.</p>
             <div className="flex gap-6">
-              <Link href="/privacy-policy" className="hover:text-gray-300 transition">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-gray-300 transition">Terms of Service</Link>
+              <Link href="/privacy-policy" className="hover:text-[var(--text-muted)] transition">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-[var(--text-muted)] transition">Terms of Service</Link>
             </div>
           </div>
         </footer>

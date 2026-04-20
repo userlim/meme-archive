@@ -104,7 +104,7 @@ function SwipePlayer() {
 
   if (!meme) {
     return (
-      <div className="h-dvh flex items-center justify-center text-gray-400">
+      <div className="h-dvh flex items-center justify-center text-[var(--text-muted)]">
         <p>Meme not found</p>
       </div>
     )
@@ -115,7 +115,7 @@ function SwipePlayer() {
       <div className="h-dvh flex items-center justify-center bg-black">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-400">{t(locale, 'loading')}</p>
+          <p className="text-[var(--text-muted)]">{t(locale, 'loading')}</p>
         </div>
       </div>
     )
@@ -123,7 +123,7 @@ function SwipePlayer() {
 
   if (videos.length === 0) {
     return (
-      <div className="h-dvh flex items-center justify-center bg-black text-gray-400">
+      <div className="h-dvh flex items-center justify-center bg-black text-[var(--text-muted)]">
         <div className="text-center">
           <p className="text-4xl mb-4">📭</p>
           <p>{t(locale, 'noVideos')}</p>
@@ -151,7 +151,7 @@ function SwipePlayer() {
         <div className="text-white text-sm font-medium">
           {locale === 'ko' ? meme.nameKo : meme.name}
         </div>
-        <div className="text-gray-400 text-sm">
+        <div className="text-[var(--text-muted)] text-sm">
           {currentIndex + 1}/{videos.length}
         </div>
       </div>
@@ -170,8 +170,8 @@ function SwipePlayer() {
       {/* Bottom info */}
       <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-6 pt-12 bg-gradient-to-t from-black/90 to-transparent">
         <h3 className="text-white font-semibold text-base sm:text-lg line-clamp-2 mb-1">{video.title}</h3>
-        <p className="text-gray-400 text-sm">{video.channelTitle}</p>
-        <p className="text-gray-500 text-xs mt-1">
+        <p className="text-[var(--text-muted)] text-sm">{video.channelTitle}</p>
+        <p className="text-[var(--text-secondary)] text-xs mt-1">
           {formatViewCount(video.viewCount, locale)} {t(locale, 'viewCount')}
         </p>
       </div>
@@ -194,7 +194,7 @@ function SwipePlayer() {
 
       {/* Swipe hint */}
       {currentIndex === 0 && (
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 text-gray-500 text-xs animate-bounce">
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 text-[var(--text-secondary)] text-xs animate-bounce">
           {t(locale, 'swipeHint')}
         </div>
       )}
