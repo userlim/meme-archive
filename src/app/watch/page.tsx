@@ -104,7 +104,7 @@ function SwipePlayer() {
 
   if (!meme) {
     return (
-      <div className="h-dvh flex items-center justify-center text-[#8B95A1]">
+      <div className="h-dvh flex items-center justify-center text-gray-400">
         <p>Meme not found</p>
       </div>
     )
@@ -112,10 +112,10 @@ function SwipePlayer() {
 
   if (loading) {
     return (
-      <div className="h-dvh flex items-center justify-center bg-white">
+      <div className="h-dvh flex items-center justify-center bg-black">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-[#8B95A1]">{t(locale, 'loading')}</p>
+          <p className="text-gray-400">{t(locale, 'loading')}</p>
         </div>
       </div>
     )
@@ -123,7 +123,7 @@ function SwipePlayer() {
 
   if (videos.length === 0) {
     return (
-      <div className="h-dvh flex items-center justify-center bg-white text-[#8B95A1]">
+      <div className="h-dvh flex items-center justify-center bg-black text-gray-400">
         <div className="text-center">
           <p className="text-4xl mb-4">📭</p>
           <p>{t(locale, 'noVideos')}</p>
@@ -138,20 +138,20 @@ function SwipePlayer() {
   const video = videos[currentIndex]
 
   return (
-    <div ref={containerRef} className="h-dvh bg-white flex flex-col overflow-hidden"
+    <div ref={containerRef} className="h-dvh bg-black flex flex-col overflow-hidden"
       onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
       onWheel={handleWheel}>
       {/* Top bar */}
       <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/80 to-transparent">
-        <button onClick={() => router.back()} className="text-[#191F28] p-2">
+        <button onClick={() => router.back()} className="text-white p-2">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
-        <div className="text-[#191F28] text-sm font-medium">
+        <div className="text-white text-sm font-medium">
           {locale === 'ko' ? meme.nameKo : meme.name}
         </div>
-        <div className="text-[#8B95A1] text-sm">
+        <div className="text-gray-400 text-sm">
           {currentIndex + 1}/{videos.length}
         </div>
       </div>
@@ -169,9 +169,9 @@ function SwipePlayer() {
 
       {/* Bottom info */}
       <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-6 pt-12 bg-gradient-to-t from-black/90 to-transparent">
-        <h3 className="text-[#191F28] font-semibold text-base sm:text-lg line-clamp-2 mb-1">{video.title}</h3>
-        <p className="text-[#8B95A1] text-sm">{video.channelTitle}</p>
-        <p className="text-[#4E5968] text-xs mt-1">
+        <h3 className="text-white font-semibold text-base sm:text-lg line-clamp-2 mb-1">{video.title}</h3>
+        <p className="text-gray-400 text-sm">{video.channelTitle}</p>
+        <p className="text-gray-500 text-xs mt-1">
           {formatViewCount(video.viewCount, locale)} {t(locale, 'viewCount')}
         </p>
       </div>
@@ -179,13 +179,13 @@ function SwipePlayer() {
       {/* Side nav */}
       <div className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
         <button onClick={() => goTo(currentIndex - 1)} disabled={currentIndex === 0}
-          className="w-10 h-10 rounded-full bg-white/[0.03]/10 backdrop-blur flex items-center justify-center text-[#191F28] disabled:opacity-30 transition hover:bg-white/[0.03]/20">
+          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-white disabled:opacity-30 transition hover:bg-white/20">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7"/>
           </svg>
         </button>
         <button onClick={() => goTo(currentIndex + 1)} disabled={currentIndex === videos.length - 1}
-          className="w-10 h-10 rounded-full bg-white/[0.03]/10 backdrop-blur flex items-center justify-center text-[#191F28] disabled:opacity-30 transition hover:bg-white/[0.03]/20">
+          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-white disabled:opacity-30 transition hover:bg-white/20">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/>
           </svg>
@@ -194,7 +194,7 @@ function SwipePlayer() {
 
       {/* Swipe hint */}
       {currentIndex === 0 && (
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 text-[#4E5968] text-xs animate-bounce">
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 text-gray-500 text-xs animate-bounce">
           {t(locale, 'swipeHint')}
         </div>
       )}
@@ -205,7 +205,7 @@ function SwipePlayer() {
 export default function WatchPage() {
   return (
     <Suspense fallback={
-      <div className="h-dvh flex items-center justify-center bg-white">
+      <div className="h-dvh flex items-center justify-center bg-black">
         <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin" />
       </div>
     }>

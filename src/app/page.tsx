@@ -41,7 +41,7 @@ function timeAgo(dateStr: string, locale: Locale): string {
 
 function TrendingSkeleton() {
   return (
-    <div className="rounded-2xl overflow-hidden bg-[#1a1a1a] border border-[#E5E8EB]">
+    <div className="rounded-2xl overflow-hidden bg-[#1a1a1a] border border-white/5">
       <div className="aspect-video skeleton" />
       <div className="p-3 space-y-2">
         <div className="skeleton h-4 w-3/4" />
@@ -62,15 +62,15 @@ const SECTION_LABELS: Record<string, { en: string; ko: string; emoji: string }> 
 function MemeCard({ meme, locale }: { meme: MemeCategory; locale: Locale }) {
   return (
     <Link href={`/meme/${meme.slug}`}
-      className="group rounded-xl overflow-hidden bg-[#1a1a1a] border border-[#E5E8EB] video-card">
+      className="group rounded-xl overflow-hidden bg-[#1a1a1a] border border-white/5 video-card">
       <div className={`aspect-[3/2] bg-gradient-to-br ${meme.color} flex items-center justify-center relative`}>
         <span className="text-4xl sm:text-5xl group-hover:scale-110 transition-transform duration-300">{meme.emoji}</span>
       </div>
       <div className="p-2.5">
-        <h3 className="font-bold text-[#191F28] text-xs sm:text-sm truncate">
+        <h3 className="font-bold text-white text-xs sm:text-sm truncate">
           {locale === 'ko' ? meme.nameKo : meme.name}
         </h3>
-        <p className="text-[11px] text-[#4E5968] mt-0.5 line-clamp-1">
+        <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-1">
           {locale === 'ko' ? meme.descriptionKo : meme.description}
         </p>
       </div>
@@ -171,28 +171,28 @@ export default function HomePage() {
         <div className="relative max-w-5xl mx-auto px-4 text-center">
           <div className="flex justify-center mb-4">
             <select value={locale} onChange={e => setLocale(e.target.value as Locale)}
-              className="text-sm bg-white/[0.03]/10 border border-white/20 rounded-lg px-3 py-1.5 text-[#8B95A1] outline-none">
+              className="text-sm bg-white/10 border border-white/20 rounded-lg px-3 py-1.5 text-gray-300 outline-none">
               {(Object.keys(LOCALE_NAMES) as Locale[]).map(l => (
                 <option key={l} value={l} className="bg-[#1a1a1a]">{LOCALE_NAMES[l]}</option>
               ))}
             </select>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-[#191F28] mb-3 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black text-white mb-3 tracking-tight">
             {t(locale, 'heroTitle')}
           </h1>
-          <p className="text-[#8B95A1] text-sm sm:text-base max-w-xl mx-auto mb-5">
+          <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-5">
             {locale === 'ko'
               ? '50+ 카테고리, 실시간 업데이트. 지금 이 순간 가장 핫한 밈만 모아봐요.'
               : '50+ categories, real-time updates. Only the hottest memes right now.'}
           </p>
           <div className="max-w-md mx-auto">
             <div className="relative">
-              <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4E5968]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
                 placeholder={t(locale, 'search')}
-                className="w-full pl-10 pr-4 py-2.5 bg-white/[0.03]/10 border border-white/20 rounded-xl text-[#191F28] text-sm placeholder-gray-500 outline-none focus:border-red-500/50 transition" />
+                className="w-full pl-10 pr-4 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white text-sm placeholder-gray-500 outline-none focus:border-red-500/50 transition" />
             </div>
           </div>
         </div>
@@ -205,7 +205,7 @@ export default function HomePage() {
             <iframe src={`https://www.youtube.com/embed/${playingId}?autoplay=1`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
           </div>
-          <button onClick={() => setPlayingId(null)} className="mt-2 text-sm text-[#8B95A1] hover:text-[#191F28] transition">
+          <button onClick={() => setPlayingId(null)} className="mt-2 text-sm text-gray-400 hover:text-white transition">
             {locale === 'ko' ? '닫기' : 'Close'}
           </button>
         </section>
@@ -214,14 +214,14 @@ export default function HomePage() {
       {/* Search results mode */}
       {filteredCategories !== null ? (
         <section className="max-w-7xl mx-auto px-4 pb-16">
-          <h2 className="text-xl font-bold text-[#191F28] mb-4">
+          <h2 className="text-xl font-bold text-white mb-4">
             {locale === 'ko' ? '검색 결과' : 'Search Results'} ({filteredCategories.length})
           </h2>
           <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
             {filteredCategories.map(meme => <MemeCard key={meme.slug} meme={meme} locale={locale} />)}
           </div>
           {filteredCategories.length === 0 && (
-            <div className="text-center py-16 text-[#4E5968]">
+            <div className="text-center py-16 text-gray-500">
               <p className="text-3xl mb-2">🤷</p>
               <p>{t(locale, 'noVideos')}</p>
             </div>
@@ -232,10 +232,10 @@ export default function HomePage() {
           {/* REAL-TIME TRENDING VIDEOS */}
           <section className="max-w-7xl mx-auto px-4 pb-8">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-[#191F28] flex items-center gap-2">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 🔥 {locale === 'ko' ? '실시간 HOT 밈' : 'Hot Right Now'}
               </h2>
-              <span className="text-[11px] text-[#8B95A1]">
+              <span className="text-[11px] text-gray-600">
                 {locale === 'ko' ? '15분마다 업데이트' : 'Updates every 15min'}
               </span>
             </div>
@@ -244,7 +244,7 @@ export default function HomePage() {
                 {Array.from({ length: 8 }).map((_, i) => <TrendingSkeleton key={i} />)}
               </div>
             ) : trendingVideos.length === 0 ? (
-              <div className="text-center py-8 text-[#4E5968] text-sm">
+              <div className="text-center py-8 text-gray-500 text-sm">
                 <p>{t(locale, 'apiKeyMissing')}</p>
               </div>
             ) : (
@@ -253,23 +253,23 @@ export default function HomePage() {
                   const watched = isWatched(video.id)
                   return (
                     <button key={video.id} onClick={() => handlePlayTrending(video)}
-                      className="rounded-xl overflow-hidden bg-[#1a1a1a] border border-[#E5E8EB] video-card text-left">
+                      className="rounded-xl overflow-hidden bg-[#1a1a1a] border border-white/5 video-card text-left">
                       <div className="relative">
                         <img src={video.thumbnail} alt={video.title}
                           className={`w-full aspect-video object-cover ${watched ? 'opacity-50' : ''}`} loading="lazy" />
-                        <span className={`absolute top-1.5 left-1.5 text-[#191F28] text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                          index < 3 ? 'bg-red-500' : 'bg-white/60'
+                        <span className={`absolute top-1.5 left-1.5 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                          index < 3 ? 'bg-red-500' : 'bg-black/60'
                         }`}>#{index + 1}</span>
                         {video.ageHours < 24 && (
-                          <span className="absolute top-1.5 right-1.5 bg-emerald-500 text-[#191F28] text-[9px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+                          <span className="absolute top-1.5 right-1.5 bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
                         )}
                         {video.duration && (
-                          <span className="absolute bottom-1 right-1 bg-white/80 text-[#191F28] text-[10px] px-1 py-0.5 rounded">{parseDuration(video.duration)}</span>
+                          <span className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1 py-0.5 rounded">{parseDuration(video.duration)}</span>
                         )}
                       </div>
                       <div className="p-2">
-                        <h3 className={`font-medium text-xs line-clamp-2 ${watched ? 'text-[#8B95A1]' : 'text-[#191F28]'}`}>{video.title}</h3>
-                        <div className="flex items-center gap-1 text-[#4E5968] text-[10px] mt-1">
+                        <h3 className={`font-medium text-xs line-clamp-2 ${watched ? 'text-gray-400' : 'text-white'}`}>{video.title}</h3>
+                        <div className="flex items-center gap-1 text-gray-500 text-[10px] mt-1">
                           <span>{formatViewCount(video.viewCount, locale)} {t(locale, 'viewCount')}</span>
                           <span>·</span>
                           <span>{timeAgo(video.publishedAt, locale)}</span>
@@ -289,7 +289,7 @@ export default function HomePage() {
             const label = SECTION_LABELS[sectionKey]
             return (
               <section key={sectionKey} className="max-w-7xl mx-auto px-4 pb-8">
-                <h2 className="text-lg font-bold text-[#191F28] mb-4 flex items-center gap-2">
+                <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                   {label.emoji} {locale === 'ko' ? label.ko : label.en}
                 </h2>
                 <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -304,70 +304,57 @@ export default function HomePage() {
       {/* SEO Content Section */}
       <section id="about-section" className="mt-8 max-w-3xl mx-auto px-4">
         <h2 className="text-xl font-bold mb-3">About This Tool</h2>
-        <p className="text-[#4E5968] leading-relaxed">Browse and discover the internet's best memes in one organized archive. From classic reaction images to the latest viral trends, our curated collection covers every meme category. Search by keyword, browse by category, or explore what's trending. Save and share your favorites instantly.</p>
+        <p className="text-gray-600 dark:text-gray-400 leading-relaxed">Browse and discover the internet's best memes in one organized archive. From classic reaction images to the latest viral trends, our curated collection covers every meme category. Search by keyword, browse by category, or explore what's trending. Save and share your favorites instantly.</p>
       </section>
       
       {/* Extended Content Section for SEO depth */}
-      <section id="content-depth-section" className="mt-20 max-w-3xl mx-auto px-6 relative z-[1]">
-        <h2 className="text-h2 mb-6 text-[#191F28]">Complete Guide</h2>
+      <section id="content-depth-section" className="mt-12 max-w-3xl mx-auto px-4">
+        <h2 className="text-2xl font-bold mb-6">Complete Guide</h2>
         
             <div className="mb-6">
-              <h3 className="text-h3 mb-2 text-[#191F28]">What Makes a Meme Go Viral?</h3>
-              <p className="text-[#4E5968] leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Internet memes spread through a combination of relatability, humor, simplicity, and timing. Research from Indiana University found that meme virality follows a "rich-get-richer" pattern — memes that gain early traction on platforms like Reddit, Twitter, and TikTok are exponentially more likely to spread further. The most successful memes tap into universal emotions or current events, are easily remixable, and work across cultural contexts.` }} />
+              <h3 className="text-lg font-semibold mb-2">What Makes a Meme Go Viral?</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Internet memes spread through a combination of relatability, humor, simplicity, and timing. Research from Indiana University found that meme virality follows a "rich-get-richer" pattern — memes that gain early traction on platforms like Reddit, Twitter, and TikTok are exponentially more likely to spread further. The most successful memes tap into universal emotions or current events, are easily remixable, and work across cultural contexts.` }} />
             </div>
             <div className="mb-6">
-              <h3 className="text-h3 mb-2 text-[#191F28]">The History of Internet Memes</h3>
-              <p className="text-[#4E5968] leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `The term "meme" was coined by Richard Dawkins in his 1976 book "The Selfish Gene" to describe how cultural information spreads. Internet memes evolved from early examples like the Dancing Baby (1996) and All Your Base Are Belong to Us (2001) through rage comics and advice animals (2008-2012), to today's short-form video memes on TikTok and Instagram Reels. Each era reflects the dominant platforms and cultural trends of its time.` }} />
+              <h3 className="text-lg font-semibold mb-2">The History of Internet Memes</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `The term "meme" was coined by Richard Dawkins in his 1976 book "The Selfish Gene" to describe how cultural information spreads. Internet memes evolved from early examples like the Dancing Baby (1996) and All Your Base Are Belong to Us (2001) through rage comics and advice animals (2008-2012), to today's short-form video memes on TikTok and Instagram Reels. Each era reflects the dominant platforms and cultural trends of its time.` }} />
             </div>
             <div className="mb-6">
-              <h3 className="text-h3 mb-2 text-[#191F28]">Major Meme Categories Explained</h3>
-              <p className="text-[#4E5968] leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Memes fall into several broad categories: <strong>Reaction memes</strong> express emotions in response to situations. <strong>Template memes</strong> use a recognizable format with customizable text. <strong>Wholesome memes</strong> promote positivity and kindness. <strong>Surreal memes</strong> use absurdist humor and unexpected imagery. <strong>Meta memes</strong> are self-referential, commenting on meme culture itself. <strong>Niche memes</strong> target specific communities or interests. Our archive organizes memes across all these categories for easy discovery.` }} />
+              <h3 className="text-lg font-semibold mb-2">Major Meme Categories Explained</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Memes fall into several broad categories: <strong>Reaction memes</strong> express emotions in response to situations. <strong>Template memes</strong> use a recognizable format with customizable text. <strong>Wholesome memes</strong> promote positivity and kindness. <strong>Surreal memes</strong> use absurdist humor and unexpected imagery. <strong>Meta memes</strong> are self-referential, commenting on meme culture itself. <strong>Niche memes</strong> target specific communities or interests. Our archive organizes memes across all these categories for easy discovery.` }} />
             </div>
             <div className="mb-6">
-              <h3 className="text-h3 mb-2 text-[#191F28]">Memes as Cultural Commentary</h3>
-              <p className="text-[#4E5968] leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Beyond entertainment, memes serve as a form of democratic cultural commentary. They've been used to process collective trauma (pandemic memes), comment on politics, build community identity, and even influence stock markets (as with the GameStop/WallStreetBets phenomenon). Researchers at MIT found that memes spread 6x faster than traditional news stories, making them one of the most efficient vehicles for information dissemination in the digital age.` }} />
+              <h3 className="text-lg font-semibold mb-2">Memes as Cultural Commentary</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Beyond entertainment, memes serve as a form of democratic cultural commentary. They've been used to process collective trauma (pandemic memes), comment on politics, build community identity, and even influence stock markets (as with the GameStop/WallStreetBets phenomenon). Researchers at MIT found that memes spread 6x faster than traditional news stories, making them one of the most efficient vehicles for information dissemination in the digital age.` }} />
             </div>
             <div className="mb-6">
-              <h3 className="text-h3 mb-2 text-[#191F28]">Copyright and Fair Use in Meme Culture</h3>
-              <p className="text-[#4E5968] leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Most memes exist in a gray area of copyright law. While the original images may be copyrighted, meme creation typically falls under fair use as transformative, non-commercial commentary or parody. However, commercial use of memes (in advertising, merchandise) has led to legal disputes. Notable cases include Grumpy Cat's estate winning $710,000 in a copyright lawsuit. For personal sharing and social media use, memes are generally considered fair use.` }} />
+              <h3 className="text-lg font-semibold mb-2">Copyright and Fair Use in Meme Culture</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: `Most memes exist in a gray area of copyright law. While the original images may be copyrighted, meme creation typically falls under fair use as transformative, non-commercial commentary or parody. However, commercial use of memes (in advertising, merchandise) has led to legal disputes. Notable cases include Grumpy Cat's estate winning $710,000 in a copyright lawsuit. For personal sharing and social media use, memes are generally considered fair use.` }} />
             </div>
       </section>
 
       {/* FAQ Section for SEO */}
       <section id="faq-section" className="mt-12 max-w-3xl mx-auto px-4">
-        <h2 className="text-h2 mb-6 text-[#191F28]">Frequently Asked Questions</h2>
+        <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
         
             <div className="mb-4">
-              <h3 className="text-h3 mb-2 text-[#191F28]">How many memes are in the archive?</h3>
-              <p className="text-[#4E5968]">Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content.</p>
+              <h3 className="text-lg font-semibold mb-2">How many memes are in the archive?</h3>
+              <p className="text-gray-600 dark:text-gray-400">Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content.</p>
             </div>
             <div className="mb-4">
-              <h3 className="text-h3 mb-2 text-[#191F28]">Can I search for specific memes?</h3>
-              <p className="text-[#4E5968]">Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites.</p>
+              <h3 className="text-lg font-semibold mb-2">Can I search for specific memes?</h3>
+              <p className="text-gray-600 dark:text-gray-400">Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites.</p>
             </div>
             <div className="mb-4">
-              <h3 className="text-h3 mb-2 text-[#191F28]">Are these memes free to use?</h3>
-              <p className="text-[#4E5968]">The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible.</p>
+              <h3 className="text-lg font-semibold mb-2">Are these memes free to use?</h3>
+              <p className="text-gray-600 dark:text-gray-400">The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible.</p>
             </div>
             <div className="mb-4">
-              <h3 className="text-h3 mb-2 text-[#191F28]">How do I save or share a meme?</h3>
-              <p className="text-[#4E5968]">Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms.</p>
+              <h3 className="text-lg font-semibold mb-2">How do I save or share a meme?</h3>
+              <p className="text-gray-600 dark:text-gray-400">Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms.</p>
             </div>
       </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many memes are in the archive?", "acceptedAnswer": {"@type": "Answer", "text": "Our meme archive contains thousands of curated memes organized by category including reaction memes, classic memes, trending memes, and more. The collection is regularly updated with new content."}}, {"@type": "Question", "name": "Can I search for specific memes?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, use the search function to find memes by name, description, or category. You can also browse by trending, newest, or most popular to discover new favorites."}}, {"@type": "Question", "name": "Are these memes free to use?", "acceptedAnswer": {"@type": "Answer", "text": "The memes in our archive are shared for personal entertainment and social media use. Most internet memes fall under fair use for non-commercial purposes, but always credit original creators when possible."}}, {"@type": "Question", "name": "How do I save or share a meme?", "acceptedAnswer": {"@type": "Answer", "text": "Click on any meme to view it in full size, then right-click to save or use the share button to copy the link. You can share directly to social media platforms."}}]}) }} />
-    
-        {/* Keyword-Optimized Content */}
-        <section id="keyword-seo-section" className="mt-12 max-w-3xl mx-auto px-6 pb-16 relative z-[1]">
-          <p className="text-sm text-[#8B95A1] leading-relaxed">
-            Browse thousands of funny memes, trending memes 2026, dank memes, and viral memes. Our meme archive features the best meme collection with popular memes today, reaction memes, and new memes updated daily. Search and discover meme templates.
-          </p>
-<div className="mt-3 flex flex-wrap gap-2">
-          <a href="https://emoji-copy-app.vercel.app" className="text-xs text-[var(--accent)] hover:underline opacity-70 hover:opacity-100">Emoji Copy & Paste →</a>
-          <a href="https://meettime-tawny.vercel.app" className="text-xs text-[var(--accent)] hover:underline opacity-70 hover:opacity-100">MeetTime →</a>
-          <a href="https://timezone-converter-ashy.vercel.app" className="text-xs text-[var(--accent)] hover:underline opacity-70 hover:opacity-100">Timezone Converter →</a>
-        </div>
-
-        </section>
-        </>
+    </>
   )
 }
