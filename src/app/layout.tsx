@@ -75,15 +75,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 </head>
       <body className="min-h-screen flex flex-col">
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-[#0f0f0f]/90 backdrop-blur-md border-b border-white/5">
+        <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-[#E5E8EB]">
           <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <span className="text-xl">🎬</span>
-              <span className="font-bold text-lg text-white">Meme Archive</span>
+              <span className="font-bold text-lg text-[#191F28]">Meme Archive</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm text-[var(--text-muted)]">
-              <Link href="/" className="hover:text-white transition">Home</Link>
-              <Link href="/history-page" className="hover:text-white transition flex items-center gap-1">
+            <nav className="flex items-center gap-4 text-sm text-[#8B95A1]">
+              <Link href="/" className="hover:text-[#191F28] transition">Home</Link>
+              <Link href="/history-page" className="hover:text-[#191F28] transition flex items-center gap-1">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
@@ -97,21 +97,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
 
         {/* Footer */}
-        <footer className="border-t border-white/5 py-8 mt-12">
+        <footer className="border-t border-[#E5E8EB] py-8 mt-12">
           
             <div className="flex flex-wrap justify-center gap-4 mb-3">
-              <span className="text-xs text-[var(--text-secondary)] font-semibold uppercase tracking-wider">Related Free Tools:</span>
-                <a href="https://emoji-copy-app.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">Emoji Copy & Paste Tool</a>
-                <a href="https://meettime-tawny.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">Meeting Time Zone Scheduler</a>
-                <a href="https://timezone-converter-ashy.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">World Timezone Converter</a>
-                <a href="https://bmi-calculator-free.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">Free BMI Calculator</a>
-                <a href="https://utilicalc.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-white transition-colors text-xs">UtiliCalc All-in-One Tools</a>
+              <span className="text-xs text-[#4E5968] font-semibold uppercase tracking-wider">Related Free Tools:</span>
+                <a href="https://emoji-copy-app.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[#8B95A1] hover:text-[#191F28] transition-colors text-xs">Emoji Copy & Paste Tool</a>
+                <a href="https://meettime-tawny.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[#8B95A1] hover:text-[#191F28] transition-colors text-xs">Meeting Time Zone Scheduler</a>
+                <a href="https://timezone-converter-ashy.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[#8B95A1] hover:text-[#191F28] transition-colors text-xs">World Timezone Converter</a>
+                <a href="https://bmi-calculator-free.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[#8B95A1] hover:text-[#191F28] transition-colors text-xs">Free BMI Calculator</a>
+                <a href="https://utilicalc.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[#8B95A1] hover:text-[#191F28] transition-colors text-xs">UtiliCalc All-in-One Tools</a>
             </div>
-          <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--text-secondary)]">
+          <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#4E5968]">
             <p>&copy; {new Date().getFullYear()} Meme Archive. All rights reserved.</p>
             <div className="flex gap-6">
-              <Link href="/privacy-policy" className="hover:text-[var(--text-muted)] transition">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-[var(--text-muted)] transition">Terms of Service</Link>
+              <Link href="/privacy-policy" className="hover:text-[#8B95A1] transition">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-[#8B95A1] transition">Terms of Service</Link>
             </div>
           </div>
         </footer>

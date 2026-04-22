@@ -103,7 +103,7 @@ export default function MemeDetailPage() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
         <p className="text-4xl mb-4">😵</p>
-        <p className="text-[var(--text-muted)]">Meme not found</p>
+        <p className="text-[#8B95A1]">Meme not found</p>
         <Link href="/" className="mt-4 inline-block text-red-400 hover:text-red-300">{t(locale, 'backToHome')}</Link>
       </div>
     )
@@ -114,7 +114,7 @@ export default function MemeDetailPage() {
       {/* Language */}
       <div className="flex justify-end mb-4">
         <select value={locale} onChange={e => setLocale(e.target.value as Locale)}
-          className="text-sm bg-white/[0.03]/10 border border-white/20 rounded-lg px-3 py-1.5 text-[var(--text-muted)] outline-none">
+          className="text-sm bg-white/[0.03]/10 border border-white/20 rounded-lg px-3 py-1.5 text-[#8B95A1] outline-none">
           {(Object.keys(LOCALE_NAMES) as Locale[]).map(l => (
             <option key={l} value={l} className="bg-[#1a1a1a]">{LOCALE_NAMES[l]}</option>
           ))}
@@ -122,7 +122,7 @@ export default function MemeDetailPage() {
       </div>
 
       {/* Back + Title */}
-      <Link href="/" className="inline-flex items-center gap-1 text-[var(--text-muted)] hover:text-white text-sm mb-6 transition">
+      <Link href="/" className="inline-flex items-center gap-1 text-[#8B95A1] hover:text-[#191F28] text-sm mb-6 transition">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
         {t(locale, 'backToHome')}
       </Link>
@@ -132,10 +132,10 @@ export default function MemeDetailPage() {
           {meme.emoji}
         </div>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white">
+          <h1 className="text-2xl sm:text-3xl font-black text-[#191F28]">
             {locale === 'ko' ? meme.nameKo : meme.name}
           </h1>
-          <p className="text-[var(--text-muted)] text-sm mt-1">
+          <p className="text-[#8B95A1] text-sm mt-1">
             {locale === 'ko' ? meme.descriptionKo : meme.description}
           </p>
         </div>
@@ -146,7 +146,7 @@ export default function MemeDetailPage() {
         {(['trending', 'viewCount', 'date', 'relevance'] as SortOrder[]).map(s => (
           <button key={s} onClick={() => setSort(s)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-              sort === s ? 'bg-white/[0.03] text-black' : 'bg-white/[0.03]/10 text-[var(--text-muted)] hover:bg-white/[0.03]/20'
+              sort === s ? 'bg-white/[0.03] text-black' : 'bg-white/[0.03]/10 text-[#8B95A1] hover:bg-white/[0.03]/20'
             }`}>
             {s === 'trending' ? (locale === 'ko' ? '🔥 트렌딩' : '🔥 Trending') :
              t(locale, s === 'viewCount' ? 'sortByViews' : s === 'date' ? 'sortByDate' : 'sortByRelevance')}
@@ -157,7 +157,7 @@ export default function MemeDetailPage() {
       {/* Watch All in Swipe Mode */}
       {videos.length > 0 && (
         <Link href={`/watch?slug=${slug}&sort=${sort}`}
-          className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold text-sm transition">
+          className="inline-flex items-center gap-2 mb-6 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-[#191F28] rounded-xl font-semibold text-sm transition">
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           {t(locale, 'watchAll')}
         </Link>
@@ -174,7 +174,7 @@ export default function MemeDetailPage() {
             />
           </div>
           <button onClick={() => setPlayingId(null)}
-            className="mt-2 text-sm text-[var(--text-muted)] hover:text-white transition">
+            className="mt-2 text-sm text-[#8B95A1] hover:text-[#191F28] transition">
             {locale === 'ko' ? '닫기' : 'Close player'}
           </button>
         </div>
@@ -185,10 +185,10 @@ export default function MemeDetailPage() {
         {loading ? (
           Array.from({ length: 8 }).map((_, i) => <VideoSkeleton key={i} />)
         ) : videos.length === 0 ? (
-          <div className="text-center py-20 text-[var(--text-secondary)]">
+          <div className="text-center py-20 text-[#4E5968]">
             <p className="text-4xl mb-4">📭</p>
             <p>{t(locale, 'noVideos')}</p>
-            <p className="text-xs mt-2 text-[var(--text-muted)]">{t(locale, 'apiKeyMissing')}</p>
+            <p className="text-xs mt-2 text-[#8B95A1]">{t(locale, 'apiKeyMissing')}</p>
           </div>
         ) : (
           videos.map((video, index) => {
@@ -202,23 +202,23 @@ export default function MemeDetailPage() {
                   <img src={video.thumbnail} alt={video.title}
                     className={`w-full aspect-video object-cover rounded-lg ${watched ? 'opacity-60' : ''}`} loading="lazy" />
                   {video.duration && (
-                    <span className="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 right-1 bg-white/80 text-[#191F28] text-xs px-1.5 py-0.5 rounded">
                       {parseDuration(video.duration)}
                     </span>
                   )}
-                  <span className="absolute top-1 left-1 bg-black/60 text-white text-xs px-1.5 py-0.5 rounded">
+                  <span className="absolute top-1 left-1 bg-white/60 text-[#191F28] text-xs px-1.5 py-0.5 rounded">
                     #{index + 1}
                   </span>
                   {watched && (
-                    <span className="absolute top-1 right-1 bg-red-500/80 text-white text-[10px] px-1.5 py-0.5 rounded">
+                    <span className="absolute top-1 right-1 bg-red-500/80 text-[#191F28] text-[10px] px-1.5 py-0.5 rounded">
                       {locale === 'ko' ? '시청함' : 'Watched'}
                     </span>
                   )}
                 </div>
                 <div className="flex-1 min-w-0 py-1">
-                  <h3 className={`text-sm sm:text-base font-medium line-clamp-2 ${watched ? 'text-[var(--text-muted)]' : 'text-white'}`}>{video.title}</h3>
-                  <p className="text-[var(--text-muted)] text-xs mt-1">{video.channelTitle}</p>
-                  <div className="flex items-center gap-2 text-[var(--text-secondary)] text-xs mt-1">
+                  <h3 className={`text-sm sm:text-base font-medium line-clamp-2 ${watched ? 'text-[#8B95A1]' : 'text-[#191F28]'}`}>{video.title}</h3>
+                  <p className="text-[#8B95A1] text-xs mt-1">{video.channelTitle}</p>
+                  <div className="flex items-center gap-2 text-[#4E5968] text-xs mt-1">
                     <span>{formatViewCount(video.viewCount, locale)} {t(locale, 'viewCount')}</span>
                     <span>·</span>
                     <span>{timeAgo(video.publishedAt, locale)}</span>
